@@ -1,3 +1,16 @@
+<---------部署Django应用------------------------------------------------------------->
+#注意: python2和python3 命令不同 python/python3.6
+Centos系统自带python2,由于YUM和部分系统组件需要使用python2,python3版本的镜像会保留python2,python3版本的镜像运行解析器命令为: python3.6
+
+1.在 /data/wwwroot/创建一个文件夹用来存放Django程序, 这里假设文件夹名为django_project
+2.上传Django程序到/data/wwwroot/django_project目录下,这里假设文件夹名称project
+3.(可选,推荐) 在/data/wwwroot/django_project 目录下运行命令 virtualenv env (py3 使用 python3.6 -m venv env ) 生产Python虚拟环境,以便隔离系统Python环境(env为虚拟环境生成的文件夹名称可以自定义)
+4.启用Python虚拟环境,运行命令 source ./env/bin/activate,启用后服务器主机名会带上(env) 字样,表示激活成功
+5.安装Django程序所需依赖 进入上传的Django程序目录 一般开发者都会将依赖信息保存到程序目录下的requirements.txt文件里 
+运行命令 pip install -r requirements.txt安装所需要的依赖
+6.根据自己网站程序等实际情况修改 程序目录里的配置文件,一般文件名为settings.py
+在此文件中设置好数据库等相关信息,附Mysql设置,请根据实际情况修改
+
 <---------文件操作------------------------------------------------------------->
 cd /home					进入 ‘/home’ 目录
 cd ..						返回上一级目录
