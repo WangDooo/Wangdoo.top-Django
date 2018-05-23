@@ -1,3 +1,10 @@
+<---------Navicat连接Mysql 修改Mysql密码------------------------------------------------------------->
+1.mysql -uroot -p
+2.mysql> use mysql
+3.mysql> update user set password=password('新密码') where user='root';
+4.mysql> flush privileges;
+5. \q
+
 <---------部署Django应用------------------------------------------------------------->
 #注意: python2和python3 命令不同 python/python3.6
 Centos系统自带python2,由于YUM和部分系统组件需要使用python2,python3版本的镜像会保留python2,python3版本的镜像运行解析器命令为: python3.6
