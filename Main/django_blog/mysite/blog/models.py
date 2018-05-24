@@ -15,4 +15,4 @@ class BlogArticles(models.Model):
 		return self.title
 
 
-		GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123465' WITH GRANT OPTION;
+		
