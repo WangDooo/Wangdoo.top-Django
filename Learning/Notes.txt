@@ -1,0 +1,7 @@
+<------------------------------------------------------------------------>
+def blog_title(request):
+	blogs = BlogAritcles.objects.all()
+	return render(request, "blog/titles.html", {"blogs":blogs})
+render()的第一个参数必须是request,然后是模板位置和所传送的数据，数据是用类字典的形式传递给模板的。
+
+<------------------------------------------------------------------------>

@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from .models import BlogAritcles
 
-# Create your views here.
+def blog_title(request):
+	blogs = BlogAritcles.objects.all()
+	return render(request, "blog/titles.html", {"blogs":blogs})
