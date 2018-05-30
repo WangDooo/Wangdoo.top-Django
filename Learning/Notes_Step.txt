@@ -1,0 +1,64 @@
+<-----------简单的Blog系统-------------------------------------------------------->
+1. django-admin startproject mysite
+
+2. python manage.py runserver
+
+3. python manage.py startapp blog
+
+4. 设置settings.py 
+		a.DEBUG
+		b.ALLOWED_HOSTS 主域名填写
+		c.INSTALLED_HOSTS 添加'blog',
+		d.TIME_ZONE: Asia/Shanghai
+
+5. 写models.py 建立数据库
+
+6. python manage.py makemigrations
+
+7. python manage.py migrate
+
+8. python manage.py createsuperuser
+
+9. 写admin.py 
+		a. from .models import BlogArticles
+		b. admin.site.register(BlogArticles)
+		c. 复杂一些 class BlogArticlesAdmin(admin.ModelAdmin):
+						list_display = ("title", "author", "publish")
+						...
+					admin.site.register(BlogArticles, BlogArticlesAdmin)
+
+10. 写views.py 提取数据，处理数据，向模板传递数据
+		a. from .models import BlogArticles
+		b.  def blog_title(request):
+		   		blogs = BlogArticles.objects.all()
+				return render(request, 'blog/title.html', {"blogs":blogs})
+
+11. 新建templates文件夹
+		a. tempaltes
+			|---base.html
+			|---blog
+				|---titles.html
+
+12. 写base.html 使用 {% block title %}{% endblock %}
+					 {% block content %}{% endblock %}
+
+13. 写titles.html 使用 {% extends "base.html" %}
+					   {% block title %} XXXXXXX {% endblock %}
+					   {% block content %} <h1>XXXX</h1><div>{{ blogs.title }}</div> {% endblock %} 双花括号传值
+
+14. 写mysite/urls.py 
+		a. from django.urls import include, path
+		b. 添加urlpatterns
+		c. path('blog/', include('blog.urls'))
+
+15. 创建并写blog/urls.py 
+		a.  from django.urls import path
+		    from . import views
+		b. 添加urlpatterns
+		c. path('', views.blog_title, name="blog_title"),
+
+16 写"详情页" 对应增加
+		a. views.py def blog_article()
+		b. content.html
+		c. titles.html 增加链接 <a href="{{ i.id }}"></a>
+		d. urls.py path('<int:article_id>/', views.blog_article, name='blog_detail'),
