@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title%}blog article{% endblock %}
+
+{% block content %}
+<div class="row text-center">
+	<h1>{{ article.title }}</h1>
+<div/>
+<div class="row">
+	<div class="col-xs-12 col-md-8">
+		<p class="text-center">
+			<span>{{ article.author.username }}</span>
+			<span style="margin-left:20px">{{ publish }}</span>
+		</p>
+		<div>{{ article.body }}</div>
+	</div>
+	<div class="col-xs-6 col-md-4">
+		<h2>WangDoo</h2>
+		<p>Buseu:www.buseu.cn</p>
+		<img  width="400px" src="https://goss.vcg.com/creative/vcg/800/new/VCG211153943465.jpg">
+	</div>
+</div>
+{% endblock %}
