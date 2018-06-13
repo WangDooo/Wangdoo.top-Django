@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'account',
-    'password_reset',
+    #'password_reset',
 ]
 
 MIDDLEWARE = [
