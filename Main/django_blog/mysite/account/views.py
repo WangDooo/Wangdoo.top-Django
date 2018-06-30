@@ -58,3 +58,30 @@ def myself_edit(request):
 	user = User.objects.get(username=request.user.username)
 	userprofile = UserProfile.objects.get(user=user)
 	userinfo = UserInfo.objects.get(user=user)
+
+	if request.method == "POST":
+		user_form = UserForm(request.POST)
+		userprofile_form = UserProfileForm(request.POST)
+		userinfo_form = UserInfoForm(request.POST)
+		if user_form.is_valid() * userprofile_form.is_valid() * userinfo_form.is_valid():
+			user_cd = user_form.cleaned_data
+			userprofile_cd = userprofile_form.cleaned_data
+			userinfo_cd = userinfo_form.cleaned_data
+			# print(user_cd['email'])
+			user.email = user_cd['email']
+			userprofile.birth = userprofile_cd['birth']
+			userprofile.phone = userporfile_cd['phone']
+			userinfo.school = userinfo_cd['school']
+			userinfo.company = userinfo_cd['company']
+			userinfo.profession = userinfo_cd['profession']
+			userinfo.address = userinfo_cd['address']
+			userinfo.aboutme = userinfo_cd['aboutme']
+			user.save()
+			userprofile.save()
+			userinfo.save()
+		return HttpResponseRedirect('/account/my-information/')
+	else: # 'GET'
+		user_form = UserForm(instance=request.user)
+		userprofile_form = UserProfileForm(initial={"birth":userprofile.birth, "phone":userprofile.phone})
+		# userinfo_form = UserInfoForm(initial={"school":userinfo.school, "company":userinfo.company, "profession":userinfo.profession, "address":userinfo.address, "aboutme":userinfo.aboutme})
+		return render(request, "account/myself_edit.html", {"user_form":user_form, "userprofile_form":userprofile_form, }) # "userinfo_form":userinfo_form
