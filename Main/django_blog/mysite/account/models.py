@@ -17,6 +17,9 @@ class UserInfo(models.Model):
 	address = models.CharField(max_length=100, blank=True)
 	aboutme = models.TextField(blank=True)
 
+	def __str__(self):
+		return "user:{}".format(self.user.username)
+
 class UserInfoTwo(models.Model):
 	user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
 	school = models.CharField(max_length=100, blank=True)
