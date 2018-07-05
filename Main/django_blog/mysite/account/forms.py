@@ -28,7 +28,7 @@ class UserProfileForm(forms.ModelForm):
 
 class UserInfoForm(forms.ModelForm):
 	class Meta:
-		mdoel = UserInfo
+		model = UserInfo
 		fields = ("school", "company", "profession", "address", "aboutme")
 
 class UserForm(forms.ModelForm):
