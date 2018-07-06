@@ -88,6 +88,10 @@ def myself_edit(request):
 @login_required(login_url='/account/login/')
 def my_image(request):
 	if request.method == 'POST':
-		
-
-	return render(request, 'account/imagecrop.html')
+		img = request.POST['img'] # 这里规定前端提交的类字典数据中有img这个键
+		userinfo = UserInfo.objects.get(user=request.user.id)
+		userinfo.photo = img
+		userinfo.save()
+		return HttpResponse("1")
+	else:
+		return render(request, 'account/imagecrop.html')

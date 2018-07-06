@@ -21,7 +21,7 @@
 
 <script type="text/javascript" src="{% static 'js/jquery-1.11.1.min.js' %}"></script> 
 <script type="text/javascript" src="{% static 'js/cropbox-min.js' %}"></script>
-
+<script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
 <script type="text/javascript">
 $(window).load(function() {
 	var options =
@@ -44,7 +44,22 @@ $(window).load(function() {
 		//getImg();
 	})
 	$('#btnCrop').on('click', function(){
-		alert("图片上传喽");
+		//alert("图片上传喽");
+		$.ajax({
+			url: '{% url "account:my_image" %}', //声明提交地址
+			type: 'POST',						 //声明提交方式，POST or GET
+			data: {"img":img},					 //声明提交的数据内容
+			success: function(e){				 //提交成功后，根据反馈结果实现页面的跳转
+				//location.href = "{% url 'account:my_information' %}"
+				//防止跳转页面在弹框中显示 修改如下
+				//视图函数中的return HttpResponse("1") 其数值在这里被用到
+				if (e == "1"){
+					parent.location.reload();
+				}else{
+					alert("Sorry,图片由于某种原因没被上传！")
+				}
+			},
+		});
 	})
 	function getImg(){
 		img = cropper.getDataURL();
