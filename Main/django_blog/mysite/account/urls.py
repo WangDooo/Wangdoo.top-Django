@@ -24,6 +24,7 @@ urlpatterns = [
 		"post_reset_redirect":"/account/password-reset-complete"}, name="password_reset_confirm"),
 	path('password-reset-complete/', auth_views.password_reset_complete, {"template_name":"account/password_reset_complete.html"}, name="password_reset_complete"),
 	path('my-information/', views.myself, name='my_information'),
-	path('edit-my-information/', views.myself_edit, name="edit_my_information")
+	path('edit-my-information/', views.myself_edit, name="edit_my_information"),
+	path('my-image/', views.my_image, name='my_image'),
 
 ]
