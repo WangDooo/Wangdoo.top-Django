@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title%}blog titles{% endblock %}
+
+{% block content %}
+<div class="row text-center">
+	<h1>WangDoo的Blog</h1>
+<div/>
+<div class="row">
+	<div class="col-xs-12 col-md-8">
+		<ul>
+			{% for blog in blogs %}
+				<li><a href="{{ blog.id }}">{{ blog.title }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="col-xs-6 col-md-4">
+		<h2>WangDoo</h2>
+		<p>Buseu:www.buseu.cn</p>
+		<img  width="400px" src="https://goss.vcg.com/creative/vcg/800/new/VCG211153943465.jpg">
+	</div>
+</div>
+{% endblock %}
