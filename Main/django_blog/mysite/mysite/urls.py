@@ -17,10 +17,10 @@ from django.urls import include, path
 from django.contrib import admin
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include(('blog.urls','blog'), namespace='blog')),
     path('account/', include(('account.urls','account'), namespace='account')),
+    path('article-column/', include(('article.urls','article'), namespace='article'))
     # path('pwd_reset/', include(('password_reset.urls','pwd_reset'), namespace='pwd_reset'))
 ]
