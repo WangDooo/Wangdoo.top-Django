@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
+
 
 from .models import ArticleColumn, ArticlePost
 from .forms import ArticleColumnForm, ArticlePostForm
@@ -71,3 +72,14 @@ def article_post(request):
 		article_post_form = ArticlePostForm()
 		acrticle_columns = request.user.article_column.all()
 		return render(request, "article/column/article_post.html", {"article_post_form":article_post_form, "article_columns":acrticle_columns})
+
+@login_required(login_url='/account/login/')
+def article_list(request):
+	articles = ArticlePost.objects.filter(author=request.user) # 筛选出用户的所有文章列表
+	return render(request, "article/column/article_list.html", {"articles":articles})
+
+@login_required(login_url='/account/login/')
+def article_detail(request, id, slug):
+	article = get_object_or_404(ArticlePost, id=id, slug=slug)
+	return render(request, "article/column/article_detail.html", {"article":article})
+
