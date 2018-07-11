@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 from .models import ArticleColumn, ArticlePost
@@ -75,8 +76,19 @@ def article_post(request):
 
 @login_required(login_url='/account/login/')
 def article_list(request):
-	articles = ArticlePost.objects.filter(author=request.user) # 筛选出用户的所有文章列表
-	return render(request, "article/column/article_list.html", {"articles":articles})
+	article_list = ArticlePost.objects.filter(author=request.user) # 筛选出用户的所有文章列表
+	paginator = Paginator(article_list, 2) # 规定每页最多两个
+	page = request.GET.get('page') # 获得浏览器GET请求的参数page的值
+	try:
+		current_page = paginator.page(page) # 得到指定页面内容，其参数必须是>=1的整数
+		articles = current_page.object_list # 得到该也所有的对象列表 page.number 返回页码
+	except PageNotAnInteger:
+		current_page = paginator.page(1)
+		articles = current_page.object_list
+	except EmptyPage:
+		current_page = paginator.page(paginator.num_pages) # paginator.num_pages 返回的是页数
+		articles = current_page.object_list
+	return render(request, "article/column/article_list.html", {"articles":articles, "page":current_page})
 
 @login_required(login_url='/account/login/')
 def article_detail(request, id, slug):
@@ -104,3 +116,13 @@ def redit_article(request, article_id):
 		this_article_form = ArticlePostForm(initial={"title":article.title})
 		this_article_column = article.column
 		return render(request, "article/column/redit_article.html", {"article":article, "article_columns":article_columns, "this_article_column":this_article_column, "this_article_form":this_article_form})
+	else:
+		redit_article = ArticlePost.objects.get(id=article_id)
+		try:
+			redit_article.column = request.user.article_column.get(id=request.POST['column_id'])
+			redit_article.title = request.POST['title']
+			redit_article.body = request.POST['body']
+			redit_article.save()
+			return HttpResponse("1")
+		except:
+			return HttpResponse("2")
