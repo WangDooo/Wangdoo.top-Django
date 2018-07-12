@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, RegistrationForm, UserProfileForm, UserInfoForm, UserForm
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile, UserInfo
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+from .forms import LoginForm, RegistrationForm, UserProfileForm, UserInfoForm, UserForm
+from .models import UserProfile, UserInfo
 
 def user_login(request):
 	if request.method == "POST":
@@ -38,7 +40,7 @@ def register(request):
 			new_profile.user = new_user
 			new_profile.save()
 			UserInfo.objects.create(user=new_user)
-			return HttpResponse('successfully')
+			return HttpResponseRedirect(reverse("account:user_login"))
 		else:
 			return HttpResponse("Sorry 你不能注册")
 	else:

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Home Page{% endblock %}
+{% block content %}
+<div class="text-center">
+	<h1>WELCOME YOU!</h1>
+	<h4>人生苦短，我用PYthon</h3>
+	<h3>这个网站静作为Django模板练习使用，还有很多没有理解的地方，需要更多的实践操作与练习，也希望可以和大神们多多交流与学习！</h2>
+	<img src="{% static 'images/test.jpg' %}">
+</div>
+{% endblock %}
