@@ -7,3 +7,11 @@ No module named 'django.core.urlresolvers'
 简单来说，原因就是：django2.0 把原来的 django.core.urlresolvers 包 更改为了 django.urls包，所以我们需要把导入的包都修改一下就可以了。
 
 ------------------------------------------------------------------------------------
+
+安装Redis  https://blog.csdn.net/u012343297/article/details/78839063
+1.1 解压 Software/redis-64.3.0.503.zip
+1.2 修改redis.windows.conf文件，设置maxmemory大小:   maxmemory 1024000000
+1.3 设置redis密码:  requirepass 123456 暂是不设置
+1.4 启动redis: redis-server.exe redis.windows.conf
+1.5 将redis加入到windows的服务中: redis-server.exe --service-install redis.windows.conf --loglevel verbose
+2.1 pip install redis 

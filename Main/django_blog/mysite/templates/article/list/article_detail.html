@@ -5,26 +5,47 @@
 <link rel="stylesheet" type="text/css" href="{% static 'editor/css/editormd.preview.css' %}">
 {% endblock %}
 {% block content %}
-<div>
+
+{% with total_likes=article.users_like.count users_like=article.users_like.all %}
+<div class="container">
 	<header>
 		<h1>{{ article.title }}</h1>
-		<p>{{ article.author.username }}</p>	
+		<p>
+			<a href="{% url 'article:author_articles' article.author.username %}">{{ article.author.username }}</a>
+			<span style="margin-left: 20px" class="glyphicon glyphicon-thumbs-up">{{ total_likes }}like{{ total_likes | pluralize }}</span>
+		</p>	
 	</header>
 	<div id='editormd-view'>
 		<textarea id="append-test" style="display: none">{{ article.body }}</textarea>
+	</div>
+	<div>
+		<p class="text-center">
+			<a href="#" onclick="like_article({{ article.id }}, 'like')"><span class="glyphicon glyphicon-thumbs-up">like</span></a>
+			<a href="#" onclick="like_article({{ article.id }}, 'unlike')"><span style="margin-left: 15px" class="glyphicon glyphicon-thumbs-down">unlike</span></a>
+		</p>
+	</div>
+	<div>
+		<p class="text-center"><strong>点赞本文的读者</strong></p>
+		{% for user in users_like %}
+			<p class="text-center">{{ user.username }}</p>
+		{% empty %}
+			<p class="text-center">还没人点赞，快来抢沙发！</p>
+		{% endfor %}
 	</div>
 </div>
 
 
 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 <script type="text/javascript" src="{% static 'editor/lib/marked.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'editor/lib/prettify/min.js' %}"></script>
+<script type="text/javascript" src="{% static 'editor/lib/prettify.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'editor/lib/raphael.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'editor/lib/underscore.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'editor/lib/sequence-diagram.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'editor/lib/flowchart.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'editor/lib/jquery.flowchart.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'editor/editormd.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
 
 <script type="text/javascript">
 	$(function(){
@@ -38,4 +59,24 @@
 		});
 	});
 </script>
+
+<script type="text/javascript">
+	function like_article(id, action){
+		$.ajax({
+			url: "{% url 'article:like_article' %}",
+			type: "POST",
+			data: {"id":id, "action":action},
+			success: function(e){
+				if(e=="1"){
+					layer.msg("点赞成功！")
+					setTimeout("window.location.reload()",2000);
+				}else{
+					layer.msg("你居然不喜欢我，我会努力的！")
+					setTimeout("window.location.reload()",2000);
+				}
+			},
+		});
+	}
+</script>
+{% endwith %}
 {% endblock %}

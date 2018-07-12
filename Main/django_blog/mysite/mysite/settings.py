@@ -136,3 +136,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "544786313@qq.com"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+REDIS_HOST = 'localhost'
+REDIS_POST = 6379
+REDIS_DB = 0
