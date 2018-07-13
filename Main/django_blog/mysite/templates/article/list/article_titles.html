@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+{% load article_tags %}
 {% block title %} Articles {% endblock %}
 {% block content %}
 <div class="row text-center vertical-middle-sm">
 	<h1>Reading You are 聪明</h1>
+	<p>这里已经有{% total_articles %}篇文章可以阅读</p>
 </div>
 <div class="container">
 	{% for article in articles %}

@@ -1,4 +1,5 @@
 {% extends "article/base.html" %}
+{% load article_tags %}
 {% load staticfiles %}
 {% block title %}List Article Detail{% endblock %}
 {% block css %}
@@ -7,33 +8,86 @@
 {% block content %}
 
 {% with total_likes=article.users_like.count users_like=article.users_like.all %}
-<div class="container">
-	<header>
-		<h1>{{ article.title }}</h1>
-		<p>
-			<a href="{% url 'article:author_articles' article.author.username %}">{{ article.author.username }}</a>
-			<span style="margin-left: 20px" class="glyphicon glyphicon-thumbs-up">{{ total_likes }}like{{ total_likes | pluralize }}</span>
-			<span style="margin-left: 20px">{{ total_views }}view{{ total_views | pluralize }}</span>
-		</p>
-	</header>
-	<div id='editormd-view'>
-		<textarea id="append-test" style="display: none">{{ article.body }}</textarea>
-	</div>
-	<div>
-		<p class="text-center">
-			<a href="#" onclick="like_article({{ article.id }}, 'like')"><span class="glyphicon glyphicon-thumbs-up">like</span></a>
-			<a href="#" onclick="like_article({{ article.id }}, 'unlike')"><span style="margin-left: 15px" class="glyphicon glyphicon-thumbs-down">unlike</span></a>
-		</p>
-	</div>
-	<div>
-		<p class="text-center"><strong>点赞本文的读者</strong></p>
-		{% for user in users_like %}
-			<p class="text-center">{{ user.username }}</p>
-		{% empty %}
-			<p class="text-center">还没人点赞，快来抢沙发！</p>
-		{% endfor %}
+<div class="row">
+	<div class="col-md-9">
+		<header>
+			<h1>{{ article.title }}</h1>
+			<p>
+				<a href="{% url 'article:author_articles' article.author.username %}">{{ article.author.username }}</a>
+				<span style="margin-left: 20px" class="glyphicon glyphicon-thumbs-up">{{ total_likes }}like{{ total_likes | pluralize }}</span>
+				<span style="margin-left: 20px">{{ total_views }}view{{ total_views | pluralize }}</span>
+			</p>
+		</header>
+		<div id='editormd-view'>
+			<textarea id="append-test" style="display: none">{{ article.body }}</textarea>
+		</div>
+		<div>
+			<p class="text-center">
+				<a href="#" onclick="like_article({{ article.id }}, 'like')"><span class="glyphicon glyphicon-thumbs-up">like</span></a>
+				<a href="#" onclick="like_article({{ article.id }}, 'unlike')"><span style="margin-left: 15px" class="glyphicon glyphicon-thumbs-down">unlike</span></a>
+			</p>
+		</div>
+		<div>
+			<p class="text-center"><strong>点赞本文的读者</strong></p>
+			{% for user in users_like %}
+				<p class="text-center">{{ user.username }}</p>
+			{% empty %}
+				<p class="text-center">还没人点赞，快来抢沙发！</p>
+			{% endfor %}
+		</div>
+		<hr>
+		<div>
+			<h3><span class="glyphicon glyphicon-bullhorn"></span>文本有{{ article.comments.count }}条评论</h3>
+			{% for comment in article.comments.all %}
+			<div>
+				<p><strong>{{ comment.commentator }}</strong>说：</p>
+				<p style="margin-left: 30px">{{ comment.body }}</p>
+			</div>
+			{% empty %}
+			<p>目前还没有评论</p>
+			{% endfor %}
+
+			<h3><span class="glyphicon glyphicon-send"></span>看文评论，天经地义！</h3>
+			<form action="." method="post" class="form-horizontal" role="form">{% csrf_token %}
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">评论者</label>
+					<div class="col-sm-10">{{ comment_form.commentator }}</div>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">评论：</label>
+					<div class="col-sm-10">{{ comment_form.body}}</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<p><input type="submit" name="" value="发布评论" class="btn btn-primary"></p>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>	
+	<div class="col-md-3">
+		<p class="text-center"><h3>最受欢迎文章</h3></p>
+		<ol>
+			{% for article_rank in most_viewed %}
+			<li>
+				<a href="{{ article_rank.get_url_path }}">{{ article_rank.title }}</a>
+			</li>
+			{% endfor %}
+		</ol>
+		<hr>
+		<p class="text-center"><h3>最新文章</h3></p>
+		{% lasted_articles 4 %}
+		<hr>
+		<p class="text-center"><h3>最多评论的文章</h3></p>
+		{% most_commented_articles 4 as most_comments %}
+		<ul>
+			{% for comment_article in most_comments %}
+			<li><a href="{{ comment_article.get_url_path }}">{{ comment_article.title }}</a></li>
+			{% endfor %}
+		</ul>
 	</div>
 </div>
+
 
 
 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>

@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load article_tags %}
 {% load staticfiles %}
 {% block title %} Articles with author {% endblock %}
 {% block content %}
 <div class="row text-center vertical-middle-sm">
-	<h1>Reading You are 聪明</h1>
+	<h1>欢迎来看<span style="color: green"> {{ user.username }} </span>写的文章</h1>
+	<p>共发表了{% author_total_articles user %}篇文章</p>
 </div>
 <div class="container">
 	<div class="col-md-8">
