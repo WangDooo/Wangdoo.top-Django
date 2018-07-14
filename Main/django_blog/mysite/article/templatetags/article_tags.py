@@ -2,7 +2,11 @@ from django import template # 只有注册过的标签，系统才能识别，�
 
 register = template.Library()
 
+from django.utils.safestring import mark_safe
+
 from article.models import ArticlePost
+
+import markdown
 
 @register.simple_tag
 def total_articles():
@@ -22,3 +26,7 @@ from django.db.models import Count
 @register.simple_tag
 def most_commented_articles(n=3):
 	return list(ArticlePost.objects.annotate(total_comments=Count("comments")).order_by("-total_comments")[:n])
+
+@register.filter(name='markdown')
+def markdown_filter(text):
+	return mark_safe(markdown.markdown(text))

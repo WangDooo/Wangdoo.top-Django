@@ -17,6 +17,7 @@
 				<span style="margin-left: 20px" class="glyphicon glyphicon-thumbs-up">{{ total_likes }}like{{ total_likes | pluralize }}</span>
 				<span style="margin-left: 20px">{{ total_views }}view{{ total_views | pluralize }}</span>
 			</p>
+			<p><span style="margin-right: 10px"><strong>Tags：</strong></span>{{ article.article_tag.all | join:" , " }}</p>
 		</header>
 		<div id='editormd-view'>
 			<textarea id="append-test" style="display: none">{{ article.body }}</textarea>
@@ -85,6 +86,13 @@
 			<li><a href="{{ comment_article.get_url_path }}">{{ comment_article.title }}</a></li>
 			{% endfor %}
 		</ul>
+		<hr>
+		<p class="text-center"><h3>推荐类似的文章</h3></p>
+		{% for similar in similar_articles %}
+		<p><a href="{{ similar.get_url_path }}">{{ similar.title }}</a></p>
+		{% empty %}
+		<p>Sorry, 没有相似的文章</p>
+		{% endfor %}
 	</div>
 </div>
 

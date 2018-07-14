@@ -6,8 +6,9 @@ from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-from .models import ArticleColumn, ArticlePost
-from .forms import ArticleColumnForm, ArticlePostForm
+from .models import ArticleColumn, ArticlePost, ArticleTag
+from .forms import ArticleColumnForm, ArticlePostForm, ArticleTagForm
+import json
 
 @login_required(login_url='/account/login/')
 @csrf_exempt
@@ -64,6 +65,11 @@ def article_post(request):
 				new_article.author = request.user
 				new_article.column = request.user.article_column.get(id=request.POST['column_id'])
 				new_article.save()
+				tags = request.POST['tags']
+				if tags:
+					for atag in json.loads(tags): # json.loads()将JSON格式数据转换为列表
+						tag = request.user.tag.get(tag=atag)
+						new_article.article_tag.add(tag)
 				return HttpResponse("1")
 			except:
 				return HttpResponse("2")
@@ -71,8 +77,9 @@ def article_post(request):
 			return HttpResponse("3")
 	else:
 		article_post_form = ArticlePostForm()
-		acrticle_columns = request.user.article_column.all()
-		return render(request, "article/column/article_post.html", {"article_post_form":article_post_form, "article_columns":acrticle_columns})
+		article_columns = request.user.article_column.all()
+		article_tags = request.user.tag.all()
+		return render(request, "article/column/article_post.html", {"article_post_form":article_post_form, "article_columns":article_columns, "article_tags":article_tags})
 
 @login_required(login_url='/account/login/')
 def article_list(request):
@@ -126,3 +133,36 @@ def redit_article(request, article_id):
 			return HttpResponse("1")
 		except:
 			return HttpResponse("2")
+
+@login_required(login_url='/account/login/')
+@csrf_exempt
+def article_tag(request):
+	if request.method == "GET":
+		article_tags = ArticleTag.objects.filter(author=request.user)
+		article_tag_form = ArticleTagForm()
+		return render(request, "article/tag/tag_list.html", {"article_tags":article_tags, "article_tag_form":article_tag_form})
+
+	if request.method == "POST":
+		tag_post_form = ArticleTagForm(data=request.POST)
+		if tag_post_form.is_valid():
+			try:
+				new_tag = tag_post_form.save(commit=False)
+				new_tag.author = request.user
+				new_tag.save()
+				return HttpResponse("1")
+			except:
+				return HttpResponse("Data cannot be saved")
+		else:
+			return HttpResponse("Sorry, the form is not valid!")
+
+@login_required(login_url='/account/login/')
+@csrf_exempt
+@require_POST
+def del_article_tag(request):
+	tag_id = request.POST['tag_id']
+	try:
+		tag = ArticleTag.objects.get(id=tag_id)
+		tag.delete()
+		return HttpResponse("1")
+	except:
+		return HttpResponse("2")
