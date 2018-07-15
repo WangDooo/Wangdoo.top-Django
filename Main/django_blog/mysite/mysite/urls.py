@@ -16,6 +16,8 @@ Including another URLconf
 from django.urls import include, path
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -24,5 +26,8 @@ urlpatterns = [
     path('account/', include(('account.urls','account'), namespace='account')),
     path('article-column/', include(('article.urls','article'), namespace='article')),
     path('home/', TemplateView.as_view(template_name="home.html"), name='home'), # 通用视图
+    path('image/', include(('image.urls','image'), namespace='image')),
     # path('pwd_reset/', include(('password_reset.urls','pwd_reset'), namespace='pwd_reset'))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
