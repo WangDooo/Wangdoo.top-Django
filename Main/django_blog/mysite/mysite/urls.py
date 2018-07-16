@@ -27,6 +27,7 @@ urlpatterns = [
     path('article-column/', include(('article.urls','article'), namespace='article')),
     path('home/', TemplateView.as_view(template_name="home.html"), name='home'), # 通用视图
     path('image/', include(('image.urls','image'), namespace='image')),
+    path('course/', include(('course.urls','course'), namespace='course')),
     # path('pwd_reset/', include(('password_reset.urls','pwd_reset'), namespace='pwd_reset'))
 ]
 

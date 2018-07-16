@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'account',
     'article',
     'image',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    'course',
     #'password_reset',
 ]
 
