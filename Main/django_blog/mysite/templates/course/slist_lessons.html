@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Lessons List{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="text-center">
+		<h1>{{ course.title }}</h1>
+		<h2>课程内容列表</h2>
+	</div>
+	<table class="table table-hover" style="margin-top: 10px">
+		<tr>
+			<td>序号</td><td>内容标题</td><td>概要</td><td>发布日期</td>
+		</tr>
+		{% for lesson in course.lesson.all %}
+			<tr id="{{ forloop.counter }}">
+				<td>{{ forloop.counter }}</td>
+				<td>{{ lesson.title }}</td>
+				<td>{{ lesson.description | slice:'30' | linebreaks }}</td>
+				<td>{{ lesson.created | date:"Y-m-d" }}</td>
+			</tr>
+		{% empty %}
+			<p>还没有发布具体内容，请等待</p>
+		{% endfor %}
+	</table>
+</div>
+
+{% endblock %}

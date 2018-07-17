@@ -1,12 +1,15 @@
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView
-
-from .models import Course
-
 from braces.views import LoginRequiredMixin
-
+from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import redirect
-from .forms import CreateCourseForm
+from django.shortcuts import redirect, render, get_object_or_404
+from django.views import View
+from django.views.generic.base import TemplateResponseMixin
+
+from .forms import CreateCourseForm, CreateLessonForm
+from .models import Course, Lesson
+
+import json
 
 class CourseListView(ListView):
 	model = Course
@@ -46,7 +49,42 @@ class DeleteCourseView(UserCourseMixin, DeleteView):
 	def dispatch(self, *args, **kwargs):
 		resp = super(DeleteCourseView, self).dispatch(*args, **kwargs)
 		if self.request.is_ajax():
-			response_data = {"result": "ok"}
+			response_data = {"result":"ok"}
 			return HttpResponse(json.dumps(response_data), content_type="application/json")
 		else:
 			return resp
+
+class CreateLessonView(LoginRequiredMixin, View):
+	model = Lesson
+	login_url = "/account/login/"
+
+	def get(self, request, *args, **kwargs):
+		form = CreateLessonForm(user=self.request.user)
+		return render(request, "course/manage/create_lesson.html", {"form":form})
+
+	def post(self, request, *args, **kwargs):
+		form = CreateLessonForm(self.request.user, request.POST, request.FILES)
+		if form.is_valid():
+			new_lesson = form.save(commit=False)
+			new_lesson.user = self.request.user
+			new_lesson.save()
+			return redirect("course:manage_course")
+
+class ListLessonsView(LoginRequiredMixin, TemplateResponseMixin, View):
+	login_url = "/account/login/"
+	template_name = 'course/manage/list_lessons.html'
+
+	def get(self, request, course_id):
+		course = get_object_or_404(Course, id=course_id)
+		return self.render_to_response({'course':course})
+
+class DetailLessonView(LoginRequiredMixin, TemplateResponseMixin, View):
+	login_url = '/account/login/'
+	template_name = "course/manage/detail_lesson.html"
+
+	def get(self, request, lesson_id):
+		lesson = get_object_or_404(Lesson, id=lesson_id)
+		return self.render_to_response({'lesson':lesson})
+
+class StudentListLessonView(ListLessonsView):
+	template_name = "course/slist_lessons.html"
