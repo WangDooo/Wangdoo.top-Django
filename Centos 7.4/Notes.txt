@@ -42,6 +42,6 @@ rm -rf dir1					删除 ‘dir1’ 目录及其子目录内容
 ORM表现方式是编写数据模型类，这些类可以写在任何文件中，通常写在每个应用的models.py文件中。
 每个数据类型都是django.db.models.Model的子类。
 当数据模型写好之后，通过执行Django的数据迁移操作：
-1.python manage.py makemigrations
+1.python manage.py makemigrations XXXXX
 2.python manage.py migrate
 以后如果要修改数据库表的结构，只需要修改数据模型类，迁移数据就能够实现数据库结构的调整。
