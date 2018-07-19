@@ -15,7 +15,20 @@
 				<li><a href="#">开塞表查询</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" style="margin-right:10px">
-				<li><a href="#">LOGIN</a></li>
+				{% if user.is_authenticated %}
+				<li>
+					<div class="dropdown" style="margin-top:10px">
+						<button class="btn btn-default dropdown-toggle" type="button" id='dropdownMenu' data-toggle='dropdown'>{{ user.username }}<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a href="#">修改密码</a></li>
+							<li><a href="#">个人信息</a></li>
+						</ul>
+					</div>
+				</li>
+				<li><a href="{% url 'account:user_logout' %}">退出登录</a></li>
+				{% else %}
+				<li><a href="{% url 'account:user_login' %}">登录</a></li>
+				{% endif %}
 			</ul>
 		</div>
 	</nav>
