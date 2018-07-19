@@ -1,18 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-# from .forms import LoginForm, RegistrationForm, UserProfileForm, UserInfoForm, UserForm
+from .forms import LoginForm, RegistrationForm, UserProfileForm  #, UserInfoForm, UserForm
 from django.contrib.auth.decorators import login_required
 # from .models import UserProfile, UserInfo
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 
 def register(request):
+	right_code = '1234'
 	if request.method == "POST":
 		user_form = RegistrationForm(request.POST)
 		userprofile_form = UserProfileForm(request.POST)
-		if user_form.is_valid(): #:
-			if userprofile_form.cleaned_data['invitation_code'] == '1234':
+		if user_form.is_valid() and userprofile_form.is_valid(): #:
+			if userprofile_form.cleaned_data['invitation_code'] == right_code:
 				new_user = user_form.save(commit=False)
 				new_user.set_password(user_form.cleaned_data['password'])
 				new_user.save()

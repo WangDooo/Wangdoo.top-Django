@@ -18,7 +18,7 @@
 				{% if user.is_authenticated %}
 				<li>
 					<div class="dropdown" style="margin-top:10px">
-						<button class="btn btn-default dropdown-toggle" type="button" id='dropdownMenu' data-toggle='dropdown'>{{ user.username }}<span class="caret"></span></button>
+						<button class="btn btn-default dropdown-toggle" type="button" id='dropdownMenu' data-toggle='dropdown'>{{ user.userprofile.realname }} <span class="caret"></span></button>
 						<ul class="dropdown-menu">
 							<li><a href="#">修改密码</a></li>
 							<li><a href="#">个人信息</a></li>
