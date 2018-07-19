@@ -1,2 +1,5 @@
 Markdown==2.6.6
 
+django
+mysqlclient
+
