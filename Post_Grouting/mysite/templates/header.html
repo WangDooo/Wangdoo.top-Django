@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<div class="container">
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="{% url 'index' %}"><strong>Post Grouting</strong></a>
+		</div>
+		<div>
+			<ul class="nav navbar-nav" role="navigation">
+				<li><a href="#">开塞表查询</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right" style="margin-right:10px">
+				<li><a href="#">LOGIN</a></li>
+			</ul>
+		</div>
+	</nav>
+</div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
