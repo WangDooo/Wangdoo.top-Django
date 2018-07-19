@@ -1,0 +1,15 @@
+.myfooter {
+    position: relative;
+    vertical-align: bottom;
+}
+
+html,body,
+.mycontent {
+    height: 100%;
+}
+    
+.mycontent {
+    height: auto;
+    min-height: 75%;
+    _height: 100%;
+}
