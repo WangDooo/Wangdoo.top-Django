@@ -1,54 +1,41 @@
 {% extends "base.html" %}
-{% block title %}My Information{% endblock %}
+{% block title %}个人信息{% endblock %}
 {% block content %}
+<style type="text/css">
+.top-10{
+	margin-top: 10px;
+}
+</style>
 <div class="row text-center vertical-middle-sm">
-	<h1>My Information</h1>
+	<h1>个人信息</h1>
+	<hr>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-12 col-sm-12 col-xs-12 ">
 			<form class="form-horizontal" action="." method="post">{% csrf_token %}
 				<div class="row">
-					<div class="col-md-4 text-right"><span>用户名：</span></div>
-					<div class="col-md-8 text-left">{{user.username}}</div>
+					<div class="col-md-4 col-sm-4 col-xs-4 text-right"><span>用户名：</span></div>
+					<div class="col-md-8 col-sm-8 col-xs-8 text-left">{{user.username}}</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 text-right"><span>邮箱：</span></div>
-					<div class="col-md-8 text-left">{{user_form.email}}</div>
+				<div class="row top-10">
+					<div class="col-md-4 col-sm-4 col-xs-4 text-right"><span>邮箱：</span></div>
+					<div class="col-md-8 col-sm-8 col-xs-8 text-left">{{user_form.email}}</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 text-right"><span>生日：</span></div>
-					<div class="col-md-8 text-left">{{userprofile_form.birth}}</div>
+				<div class="row top-10">
+					<div class="col-md-4 col-sm-4 col-xs-4 text-right"><span>真实姓名：</span></div>
+					<div class="col-md-8 col-sm-8 col-xs-8 text-left">{{userprofile_form.realname}}</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 text-right"><span>电话：</span></div>
-					<div class="col-md-8 text-left">{{userprofile_form.phone}}</div>
+				<div class="row top-10">
+					<div class="col-md-4 col-sm-4 col-xs-4 col-sm-4 col-xs-4 text-right"><span>电话：</span></div>
+					<div class="col-md-8 col-sm-8 col-xs-8 text-left">{{userprofile_form.phone}}</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 text-right"><span>毕业学校：</span></div>
-					<div class="col-md-8 text-left">{{userinfo_form.school}}</div>
+				<div class="row top-10" style="display: none;">
+					<div class="col-md-4 col-sm-4 col-xs-4 text-right"><span>邀请码：</span></div>
+					<div class="col-md-8 col-sm-8 col-xs-8 text-left">{{userprofile_form.invitation_code}}</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 text-right"><span>工作单位：</span></div>
-					<div class="col-md-8 text-left">{{userinfo_form.company}}</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 text-right"><span>职业：</span></div>
-					<div class="col-md-8 text-left">{{userinfo_form.profession}}</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 text-right"><span>地址：</span></div>
-					<div class="col-md-8 text-left">{{userinfo_form.address}}</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 text-right"><span>个人介绍：</span></div>
-					<div class="col-md-8 text-left">{{userinfo_form.aboutme}}</div>
-				</div>
-				<div class="row">
-					<input type="submit" class="btn btn-primary btn-lg" value="Submit">
+				<div class="row top-10">
+					<input type="submit" class="btn btn-primary" value="确认修改">
 				</div>
 			</form>
-		</div>
-		<div class="col-md-6">
-			<p>Picture</p>
 		</div>
 	</div>
 </div>

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
+    'kaisai',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,13 @@ STATICFILES_DIRS = (
 )
 
 LOGIN_REDIRECT_URL = 'index'
+
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_HOST_USER = '2304484241@qq.com'
+EMAIL_HOST_PASSWORD = 'sxgeaqzqtbsaecdb'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "2304484241@qq.com"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
