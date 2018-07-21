@@ -1,21 +1,19 @@
-<div class="bg-info">
-	<div class="text-center" style="margin-top: 5px;">
-		<p><h4>文章管理</h4></p>
-		<p><a href="{% url 'article:article_column' %}">栏目管理</a></p>
-		<p><a href="{% url 'article:article_post' %}">发布文章</a></p>
-		<p><a href="{% url 'article:article_list' %}">文章列表</a></p>
-		<p><a href="{% url 'article:article_titles' %}">新版文章列表</a></p>
-		<p><a href="{% url 'article:article_tag' %}">文章标签</a></p>
-	</div>
-	<hr>
-	<div class="text-center" style="margin-top: 5px;">
-		<p><h4>图片管理</h4></p>
-		<p><a href="{% url 'image:list_images' %}">图片管理</a></p>
-	</div>
-	<hr>
-	<div class="text-center" style="margin-top: 5px;">
-		<p><h4>课程管理</h4></p>
-		<p><a href="{% url 'course:manage_course' %}">课程管理</a></p>
-		<p><a href="{% url 'course:create_lesson' %}">内容发布</a></p>
+<div class="">
+	<div class="text-center panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">开塞表管理</h3>
+		</div>
+		<div class="panel-body"><a href="{% url 'kaisai:kaisai_post' %}">开塞表上传</a></div>
+		<div class="panel-body"><a href="{% url 'kaisai:kaisai_list' %}">已上传的表</a></div>
+		
+		<div class="panel-heading">
+			<h3 class="panel-title">压浆管理</h3>
+		</div>	
+		<div class="panel-body"><a href="#">每日压浆量上传</a></div>	
+
+		<div class="panel-heading">
+			<h3 class="panel-title">财务报销</h3>
+		</div>	
+		<div class="panel-body"><a href="#">财务报销</a></div>	
 	</div>
 </div>

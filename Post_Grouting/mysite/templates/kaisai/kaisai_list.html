@@ -1,0 +1,17 @@
+{% extends "kaisai/base.html" %}
+{% load staticfiles %}
+{% block title %}已上传的开塞表{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">可点击查看并删除</h3>
+	</div>
+	<ul class="list-inline panel-body">
+		{% for image in images %}
+		<li style="margin-top: 10px"><a href="{% url 'kaisai:kaisai_detail' image.slug %}">{{ image.name }}</a></li>
+		{% endfor %}
+	</ul>
+</div>
+
+
+{% endblock %}

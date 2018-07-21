@@ -5,8 +5,15 @@
 {% block content %}
 <div class="jumbotron">
  	<h1>开塞表查询</h1>
- 	<p>查询需要 <a href="{% url 'account:user_login' %}" style="color:red">登录</a>，若未注册，请先 <a href="{% url 'account:user_register' %}" style="color:red">注册</a>！</p>
- 	<p><a class="btn btn-primary btn-lg" href="#" role="button">点击查询</a></p>
+ 	<del><p>查询需要 <a href="{% url 'account:user_login' %}" style="color:red">登录</a>，若未注册，请先 <a href="{% url 'account:user_register' %}" style="color:red">注册</a>！</p></del>
+ 	<p>测试期间无需注册，可直接查询！</p>
+ 	<form class="form-inline" action="{% url 'kaisai:kaisai_search' %}" method="post">{% csrf_token %}
+		<div class="form-group">
+			<label>输入桩号查开塞表</label>
+			<input name="name" type="text" class="form-control" placeholder="例如：123-3，22B-5" style="margin-left: 10px">
+		</div>
+		<button type="submit" class="btn btn-primary">点击查询</button>
+	</form>
 </div>
 <div class="jumbotron">
  	<h1>后压浆技术</h1>

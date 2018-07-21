@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title%}开塞表查询{% endblock %}
+
+{% block content %}
+<div class="row text-center">
+ 	<div class="col-md-4 col-md-offset-4">
+ 		<h2>请输入桩号</h2>
+ 		<hr>
+ 		<form action="{% url 'kaisai:kaisai_search' %}" method="post">{% csrf_token %}
+ 			<input name="name" type="text" class="form-control" placeholder="例如 123-3 22B-5">
+ 			<button type="submit" class="btn btn-primary btn-lg" style="margin-top: 10px" href="javascript:" name="search">查询</button>
+ 		</form>
+	</div>
+</div>
+
+{% endblock %}

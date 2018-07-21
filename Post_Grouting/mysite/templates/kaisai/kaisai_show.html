@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title%}开塞表{% endblock %}
+
+{% block content %}
+<div>
+ 	<ul class="list-inline">
+ 		<li><h4>桩号：<strong>{{ kaisai.name }}</strong></h4></li>
+ 		<li><h4>上传者：<strong>{{ kaisai.user.userprofile.realname }}</strong></h4></li>
+ 		<li><h4>上传时间：<strong>{{ kaisai.created }}</strong></h4></li>
+ 	</ul>	
+ 	<div>
+ 		<img src="{{ kaisai.image.url }}" class="img-responsive" alt="Responsive image"> 
+ 	</div>
+</div>
+{% endblock %}
