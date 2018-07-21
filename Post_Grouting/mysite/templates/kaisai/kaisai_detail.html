@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title%}开塞表{% endblock %}
+
+{% block content %}
+<div>
+ 	<ul class="list-inline">
+ 		<li><h4>桩号：{{ kaisai.name }}</h4></li>
+ 		<li><h4>上传者：{{ kaisai.user.userprofile.realname }}</h4></li>
+ 		<li><button class="btn btn-danger" href="javascript:" name="delete" onclick="del_kaisai(this, {{ kaisai.id }})">删除此开塞表</button></li>
+ 	</ul>	
+ 	<div>
+ 		<img src="{{ kaisai.image.url }}" class="img-responsive" alt="Responsive image"> 
+ 	</div>
+</div>
+
+
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
+<script type="text/javascript">
+	function del_kaisai(the, kaisai_id){
+		var kaisai_name = $(the).parents("ul").children("li").eq(0).text();
+		layer.open({
+			type: 1,
+			skin: "layui-layer-rim",
+			area: ["50%", "50%"],
+			title: "删除开塞表",
+			content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除《'+kaisai_name+'》的开塞表？</p></div>',
+			btn: ['确定', '取消'],
+			yes: function(){
+				$.ajax({
+					url: '{% url "kaisai:kaisai_del" %}',
+					type: "POST",
+					data: {"kaisai_id":kaisai_id},
+					success: function(e){
+						if(e=="1"){
+							layer.msg("已经删除！");
+							location.href = "{% url 'kaisai:kaisai_list' %}";
+						}else if(e=="2"){
+							layer.msg("删除失败！");
+						}else{
+							layer.msg(e);
+						}
+					},
+				});
+			},
+		});
+	}
+</script>
+{% endblock %}
