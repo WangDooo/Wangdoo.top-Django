@@ -19,7 +19,7 @@ def kaisai_post(request):
 			try:
 				new_item = form.save(commit=False)
 				new_item.user = request.user
-				new_item.name = new_item.name.upper()
+				new_item.name = new_item.name.upper() 
 				new_item.save()
 				return HttpResponseRedirect(reverse('kaisai:kaisai_post'))
 			except:

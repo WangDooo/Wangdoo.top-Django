@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def register(request):
 	right_code = '1234'
@@ -20,7 +21,7 @@ def register(request):
 				new_profile = userprofile_form.save(commit=False)
 				new_profile.user = new_user
 				new_profile.save()
-				return HttpResponse('注册成功！')
+				return HttpResponseRedirect(reverse('account:user_login'))
 			else:
 				return HttpResponse("抱歉，邀请码不对！")
 		else:
@@ -53,7 +54,7 @@ def myself_edit(request):
 			userprofile.phone = userprofile_cd['phone']
 			user.save()
 			userprofile.save()
-		return HttpResponseRedirect('/account/my-information/')
+		return HttpResponseRedirect(reverse('account:my_information'))
 	else: # 'GET'
 		user_form = UserForm(instance=request.user)
 		userprofile_form = UserProfileForm(initial={"realname":userprofile.realname, "phone":userprofile.phone, "invitation_code":userprofile.invitation_code})

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load kaisai_tags %}
 {% block title%}首页{% endblock %}
 
 {% block content %}
@@ -16,8 +16,11 @@
 	</form>
 </div>
 <div class="jumbotron">
- 	<h1>后压浆技术</h1>
- 	<p>国内外学者对桩端、桩侧后注浆技术做了广泛的研究，尤其是对后注浆桩的承载力性能进行了研究，取得了许多有价值的成果。同时国外学者又研制开发出各式各样的注浆装置，在工程中推广应用，这也使后注浆施工工艺得到了很大的发展。</p>
- 	<p><a class="btn btn-primary btn-lg" href="#" role="button">首页暂时未确定显示什么内容</a></p>
+ 	<h1>项目总概况</h1>
+ 	<p>项目总桩数：3004根，其中原桩长74根，试桩6根</p>
+ 	<p>目前成桩开塞数（包含原桩长和试桩）：{% total_kaisai %}根</p>
+ 	<p>目前已完成压浆桩数：XXX根</p>
+ 	<p>目前总压浆用水泥吨数：XXXt</p>
+ 	<p><a class="btn btn-primary btn-lg" href="#" role="button">点击查看概况平面图</a></p>
 </div>
 {% endblock %}
