@@ -23,9 +23,9 @@ def register(request):
 				new_profile.save()
 				return HttpResponseRedirect(reverse('account:user_login'))
 			else:
-				return HttpResponse("抱歉，邀请码不对！")
+				return HttpResponse("<h1>抱歉，邀请码不对！</h1>")
 		else:
-			return HttpResponse("抱歉，注册中存在问题，若仍注册不成功，请联系管理员！")
+			return HttpResponse("<h1>抱歉，注册中存在问题，若仍注册不成功，请联系管理员！</h1>")
 	else:
 		user_form = RegistrationForm()
 		userprofile_form = UserProfileForm()

@@ -23,9 +23,9 @@ def kaisai_post(request):
 				new_item.save()
 				return HttpResponseRedirect(reverse('kaisai:kaisai_post'))
 			except:
-				return HttpResponse('上传中有问题！')
+				return HttpResponse('<h1>上传中有问题！</h1>')
 		else:
-			return HttpResponse('1.上传的桩号已存在！或 2.上传文件非图片格式！')
+			return HttpResponse('<h1>1.上传的桩号已存在！或 2.上传文件非图片格式！</h1>')
 	else:
 		kaisai_form = KaisaiForm()
 		return render(request, 'kaisai/kaisai_post.html', {"kaisai_form": kaisai_form})
@@ -67,9 +67,9 @@ def kaisai_search(request):
 			if kaisai:
 				return HttpResponseRedirect(reverse('kaisai:kaisai_show',args=[kaisai.slug,]))
 			else:
-				return HttpResponse("没有此桩开塞表，请注意输入格式！")
+				return HttpResponse("<h1>没有此桩开塞表，请注意输入格式！</h1>")
 		except:
-			return HttpResponse("没有此桩开塞表，请注意输入格式！")
+			return HttpResponse("<h1>没有此桩开塞表，请注意输入格式！</h1>")
 	else:
 		return render(request, "kaisai/kaisai_search.html")
 
