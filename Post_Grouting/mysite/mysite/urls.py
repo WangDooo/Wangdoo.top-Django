@@ -25,6 +25,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="index.html"), name="index"),
     path('account/', include(('account.urls','account'), namespace='account')),
     path('kaisai/', include(('kaisai.urls','kaisai'), namespace='kaisai')),
+    path('overview/', include(('overview.urls','overview'), namespace='overview')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

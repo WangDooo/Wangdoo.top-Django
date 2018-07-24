@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'account',
     'kaisai',
     'sorl.thumbnail',
+    'overview',
 ]
 
 MIDDLEWARE = [
