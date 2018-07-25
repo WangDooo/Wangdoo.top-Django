@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load kaisai_tags %}
+{% load overview_tags %}
+{% block title %}工程情况总览{% endblock %}
+{% block content %}
+
+<div class="panel panel-default ">
+	<div class="panel-heading">
+		<h3 class="panel-title">工程情况总览</h3>
+	</div>
+	<table class="table table-hover table-responsive table-bordered">
+		<tr>
+			<td>项目总桩数</td>
+			<td>{% total_pile %}根，其中原桩长{% original_pile %}根，试桩{% try_pile %}根</td>
+		</tr>
+		<tr>
+			<td>目前成桩开塞数（包含原桩长和试桩）</td>
+			<td>{% total_kaisai %}根</td>
+		</tr>
+		<tr>
+			<td>目前已完成压浆桩数</td>
+			<td>XXX根</td>
+		</tr>
+		<tr>
+			<td>目前总压浆用水泥吨数</td>
+			<td>XXXt</td>
+		</tr>
+	</table>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">图标说明</h3>
+	</div>
+	<ul class="list-inline panel-body">
+		<li>未成桩<img  style="margin-left:8px" height='17' src="{% static 'images/pile_icon/pile_none.png' %}"></li>
+ 		<li>已开塞<img  style="margin-left:8px" height='17' src="{% static 'images/pile_icon/pile_kaisai.png' %}"></li>
+ 		<li>已压浆<img  style="margin-left:8px" height='17' src="{% static 'images/pile_icon/pile_grout.png' %}"></li>
+ 		<li>原桩长<img  style="margin-left:8px" height='17' src="{% static 'images/pile_icon/pile_original.png' %}"></li>
+ 		<li>试桩<img  style="margin-left:8px" height='17' src="{% static 'images/pile_icon/pile_try.png' %}"></li>
+	</ul>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">平面示意图-可点击图标查看此桩详情</h3>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<table class="table table-hover table-responsive table-bordered" id="tab">
+				<tr>
+					<td>桩号</td><td>1(1)</td><td>2(2)</td><td>4(3)</td><td>3(6)</td><td>(5)</td><td>(4)</td>
+				
+				
+			</table>
+		</div>
+	</div>
+</div>		
+
+
+<script type="text/javascript">
+
+function showData(data) {
+	var str = "";	//定义用于拼接的字符串
+	for (var i = 0; i < data.length; i++) { //length=3004
+		//拼接表格的行和列
+		temp_number = Number(data[i].name.split('-')[1])
+		temp_name = data[i].name.split('-')[0]
+		if (data[i].value==5){
+			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_try.png" %}'>";
+		}else if (data[i].value==4) {
+			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_original.png" %}'>";
+		}else if (data[i].value==3) {
+			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_grout.png" %}'>";
+		}else if (data[i].value==2) {
+			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_kaisai.png" %}'>";
+		}else{
+			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_none.png" %}'>";
+		}
+		if (temp_number == 1){
+			$("#tab").append(str);
+			str = "</tr><tr><td>" + temp_name  + "</td>";
+		}
+		str = str + "<td>" + temp_value + "</td>";
+	}
+}
+
+window.onload = function requestData(){
+	$.ajax({
+		url: "{% url 'overview:overview' %}",
+		type: "post",
+		dataType: "json",
+		success: function(data){
+    		showData(data);
+		},
+		error: function(msg){
+   			 alert("ajax连接异常："+msg);
+		}
+	});
+}
+
+
+</script>
+
+{% endblock %}

@@ -4,5 +4,5 @@ from . import views
 
 app_name = 'overview'
 urlpatterns = [
-	#path('kaisai-post', views.kaisai_post, name='kaisai_post'),
+	path('', views.overview, name='overview'),
 ]

@@ -19,3 +19,7 @@ def original_pile():
 @register.simple_tag
 def try_pile():
 	return Trypile.objects.count()
+
+@register.filter('list')
+def do_list(value):
+    return range(2, value+2)
