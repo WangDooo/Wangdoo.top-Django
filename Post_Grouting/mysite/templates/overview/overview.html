@@ -50,40 +50,67 @@
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<table class="table table-hover table-responsive table-bordered" id="tab">
 				<tr>
-					<td>桩号</td><td>1(1)</td><td>2(2)</td><td>4(3)</td><td>3(6)</td><td>(5)</td><td>(4)</td>
-				
+					<td>墩号</td><td>1(1)</td><td>2(2)</td><td>4(3)</td><td>3(6)</td><td>(5)</td><td>(4)</td>
 				
 			</table>
 		</div>
 	</div>
 </div>		
-
+<div id="DisplayModal"></div>
 
 <script type="text/javascript">
 
+function showModal(){
+	$("img").click(function(){
+ 		var post_id = this.id
+ 		var pile_id = {"pile_id":post_id};
+ 		var str = "";
+ 		// $.ajax({
+ 		// 	url: '',
+ 		// 	type: "POST",
+ 		// 	data: pile_id,
+ 		// 	success: ,
+ 		// });
+
+ 		$("#DisplayModal").empty();
+ 		str = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">桩信息-桩号：'+post_id+'</h4></div><div class="modal-body">'+'显示什么呢？'+'<p>关于桩的各种信息</p>'+
+      '</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+      	$("#DisplayModal").append(str);
+ 		$('#myModal').modal()
+	});
+}
+
 function showData(data) {
 	var str = "";	//定义用于拼接的字符串
+	var str_one = "<img style='margin-left:2px' height='17' ";
 	for (var i = 0; i < data.length; i++) { //length=3004
 		//拼接表格的行和列
 		temp_number = Number(data[i].name.split('-')[1])
 		temp_name = data[i].name.split('-')[0]
 		if (data[i].value==5){
-			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_try.png" %}'>";
+			temp_value = str_one + "src='{% static "images/pile_icon/pile_try.png" %}'"+"id='"+data[i].name+"'>";
 		}else if (data[i].value==4) {
-			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_original.png" %}'>";
+			temp_value = str_one + "src='{% static "images/pile_icon/pile_original.png" %}'"+"id='"+data[i].name+"'>";
 		}else if (data[i].value==3) {
-			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_grout.png" %}'>";
+			temp_value = str_one + "src='{% static "images/pile_icon/pile_grout.png" %}'"+"id='"+data[i].name+"'>";
 		}else if (data[i].value==2) {
-			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_kaisai.png" %}'>";
+			temp_value = str_one + "src='{% static "images/pile_icon/pile_kaisai.png" %}'"+"id='"+data[i].name+"'>";
 		}else{
-			temp_value = "<img  style='margin-left:2px' height='17' src='{% static "images/pile_icon/pile_none.png" %}'>";
+			temp_value = str_one + "src='{% static "images/pile_icon/pile_none.png" %}'"+"id='"+data[i].name+"'>";
 		}
 		if (temp_number == 1){
 			$("#tab").append(str);
 			str = "</tr><tr><td>" + temp_name  + "</td>";
 		}
 		str = str + "<td>" + temp_value + "</td>";
+		if(i == (data.length-1)){ // 加入最后一组 708B
+			str = str + "</tr>";
+			$("#tab").append(str);
+		}
 	}
+
+	showModal();
+
 }
 
 window.onload = function requestData(){
@@ -98,8 +125,8 @@ window.onload = function requestData(){
    			 alert("ajax连接异常："+msg);
 		}
 	});
-}
 
+}
 
 </script>
 

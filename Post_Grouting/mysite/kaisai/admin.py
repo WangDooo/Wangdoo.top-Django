@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import Kaisai
 
-# Register your models here.
+class KaisaiAdmin(admin.ModelAdmin):
+	list_display = ('user', 'name', 'created', 'image')
+	list_filter = ("user",)
+
+admin.site.register(Kaisai, KaisaiAdmin)

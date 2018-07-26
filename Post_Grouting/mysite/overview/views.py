@@ -59,3 +59,23 @@ def overview(request):
 		return HttpResponse(data, content_type="application/json")
 	else:
 		return render(request, "overview/overview.html")
+
+@csrf_exempt
+@require_POST
+def pile_detail(request):
+	
+
+
+
+
+
+	image_id = request.POST['kaisai_id']
+	try:
+		image = Kaisai.objects.get(id=image_id)
+		fname = image.image.path
+		if os.path.isfile(fname):
+			os.remove(fname)
+		image.delete()
+		return HttpResponse("1")
+	except:
+		return HttpResponse("2")
