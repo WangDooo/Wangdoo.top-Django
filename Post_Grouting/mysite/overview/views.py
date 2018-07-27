@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 
-from .models import Totalpile, Originalpile, Trypile
+from .models import Totalpile, Originalpile, Trypile, Piledetail
 from kaisai.models import Kaisai
 import json
 
@@ -42,40 +42,55 @@ def overview(request):
 			kaisaipile_name.append(each['name'])
 
 		for i in range(len(pile_total)):
-			for j in range(1,pile_number[i]+1):
-				pile_name = pile_total[i]+'-'+str(j)
-				if pile_name in trypile_name:
-					piles_name.append({'name':pile_name,'value':'5'})
-				elif pile_name in originalpile_name:
-					piles_name.append({'name':pile_name,'value':'4'})
-				elif pile_name in grout_name:
-					piles_name.append({'name':pile_name,'value':'3'})
-				elif pile_name in kaisaipile_name:
-					piles_name.append({'name':pile_name,'value':'2'})
-				else:
-					piles_name.append({'name':pile_name,'value':'1'})
+			if pile_number[i]==4:
+				for j in [1,2,4,3]:
+					pile_name = pile_total[i]+'-'+str(j)
+					if pile_name in trypile_name:
+						piles_name.append({'name':pile_name,'value':'5'})
+					elif pile_name in originalpile_name:
+						piles_name.append({'name':pile_name,'value':'4'})
+					elif pile_name in grout_name:
+						piles_name.append({'name':pile_name,'value':'3'})
+					elif pile_name in kaisaipile_name:
+						piles_name.append({'name':pile_name,'value':'2'})
+					else:
+						piles_name.append({'name':pile_name,'value':'1'})
+			elif pile_number[i]==6:
+				for j in [1,2,3,6,5,4]:
+					pile_name = pile_total[i]+'-'+str(j)
+					if pile_name in trypile_name:
+						piles_name.append({'name':pile_name,'value':'5'})
+					elif pile_name in originalpile_name:
+						piles_name.append({'name':pile_name,'value':'4'})
+					elif pile_name in grout_name:
+						piles_name.append({'name':pile_name,'value':'3'})
+					elif pile_name in kaisaipile_name:
+						piles_name.append({'name':pile_name,'value':'2'})
+					else:
+						piles_name.append({'name':pile_name,'value':'1'})
 
 		data = json.dumps(piles_name)
 		return HttpResponse(data, content_type="application/json")
 	else:
 		return render(request, "overview/overview.html")
 
-@csrf_exempt
 @require_POST
+@csrf_exempt
 def pile_detail(request):
-	
-
-
-
-
-
-	image_id = request.POST['kaisai_id']
+	pile_id = request.POST['pile_id']
 	try:
-		image = Kaisai.objects.get(id=image_id)
-		fname = image.image.path
-		if os.path.isfile(fname):
-			os.remove(fname)
-		image.delete()
-		return HttpResponse("1")
+		pile = Piledetail.objects.get(name=pile_id)
+		pile_info = {
+				'name':pile.name,
+				'pile_length':pile.pile_length,
+				'pile_diameter':pile.pile_diameter,
+				'pipe_layer_d':pile.pipe_layer_d,
+				'pipe_layer_c':pile.pipe_layer_c,
+				'soil_d':pile.soil_d,
+				'grout_amount_d':pile.grout_amount_d,
+				'grout_amount_c':pile.grout_amount_c,
+				'grout_amount':pile.grout_amount}
+		data = json.dumps(pile_info)
+		return HttpResponse(data, content_type="application/json")
 	except:
-		return HttpResponse("2")
+		return HttpResponse("wrong")
