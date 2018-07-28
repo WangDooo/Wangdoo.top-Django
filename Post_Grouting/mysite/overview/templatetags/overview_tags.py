@@ -3,6 +3,7 @@ from django import template
 register = template.Library()
 
 from overview.models import Totalpile, Originalpile, Trypile
+from grout.models import Grout
 
 @register.simple_tag
 def total_pile():
@@ -20,6 +21,6 @@ def original_pile():
 def try_pile():
 	return Trypile.objects.count()
 
-@register.filter('list')
-def do_list(value):
-    return range(2, value+2)
+@register.simple_tag
+def grout_amount():
+	return Grout.objects.count()

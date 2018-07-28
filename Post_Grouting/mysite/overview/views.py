@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from .models import Totalpile, Originalpile, Trypile, Piledetail
 from kaisai.models import Kaisai
+from grout.models import Grout
 import json
 
 @csrf_exempt
@@ -40,6 +41,11 @@ def overview(request):
 		ls_kaisaipile= list(kaisaipile)
 		for each in ls_kaisaipile:
 			kaisaipile_name.append(each['name'])
+		# 获取压浆列表
+		groutpile = Grout.objects.values('name')
+		ls_groutpile= list(groutpile)
+		for each in ls_groutpile:
+			grout_name.append(each['name'])
 
 		for i in range(len(pile_total)):
 			if pile_number[i]==4:
@@ -80,6 +86,11 @@ def pile_detail(request):
 	pile_id = request.POST['pile_id']
 	try:
 		pile = Piledetail.objects.get(name=pile_id)
+		try:
+			grout = Grout.objects.get(name=pile_id)
+			grout_amount_fact = grout.amount
+		except:
+			grout_amount_fact = 0
 		pile_info = {
 				'name':pile.name,
 				'pile_length':pile.pile_length,
@@ -89,7 +100,8 @@ def pile_detail(request):
 				'soil_d':pile.soil_d,
 				'grout_amount_d':pile.grout_amount_d,
 				'grout_amount_c':pile.grout_amount_c,
-				'grout_amount':pile.grout_amount}
+				'grout_amount':pile.grout_amount,
+				'grout_amount_fact':grout_amount_fact}
 		data = json.dumps(pile_info)
 		return HttpResponse(data, content_type="application/json")
 	except:

@@ -26,6 +26,7 @@ urlpatterns = [
     path('account/', include(('account.urls','account'), namespace='account')),
     path('kaisai/', include(('kaisai.urls','kaisai'), namespace='kaisai')),
     path('overview/', include(('overview.urls','overview'), namespace='overview')),
+    path('grout/', include(('grout.urls','grout'), namespace='grout')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

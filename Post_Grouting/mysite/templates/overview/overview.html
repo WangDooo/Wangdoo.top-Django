@@ -20,7 +20,7 @@
 		</tr>
 		<tr>
 			<td>目前已完成压浆桩数</td>
-			<td>XXX根</td>
+			<td>{% grout_amount %}根</td>
 		</tr>
 		<tr>
 			<td>目前总压浆用水泥吨数</td>
@@ -77,7 +77,7 @@ function showModal(){
  					alert('抱歉，没有此桩信息！')
  				}else{
  					$("#DisplayModal").empty();
- 					str = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">桩信息-桩号：'+post_id+'</h4></div><div class="modal-body"><table class="table table-hover table-responsive table-bordered"><tr><td>桩号</td><td>'+data.name+'</td></tr><tr><td>桩长(m)</td><td>'+data.pile_length+'</td></tr><tr><td>桩径(m)</td><td>'+data.pile_diameter+'</td></tr><tr><td>单桩桩端压浆管根数</td><td>'+data.pipe_layer_d+'</td></tr><tr><td>单桩桩侧压浆装置层数</td><td>'+data.pipe_layer_c+'</td></tr><tr><td>桩端持力层</td><td>'+data.soil_d+'</td></tr><tr><td>单桩桩端设计压浆量(t)</td><td>'+data.grout_amount_d+'</td></tr><tr><td>单桩桩侧设计压浆量(t)</td><td>'+data.grout_amount_c+'</td></tr><tr><td>单桩设计压浆量(t)</td><td>'+data.grout_amount+'</td></tr></table>'+'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+ 					str = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">桩信息-桩号：'+post_id+'</h4></div><div class="modal-body"><table class="table table-hover table-responsive table-bordered"><tr><td>桩号</td><td>'+data.name+'</td></tr><tr><td>桩长(m)</td><td>'+data.pile_length+'</td></tr><tr><td>桩径(m)</td><td>'+data.pile_diameter+'</td></tr><tr><td>单桩桩端压浆管根数</td><td>'+data.pipe_layer_d+'</td></tr><tr><td>单桩桩侧压浆装置层数</td><td>'+data.pipe_layer_c+'</td></tr><tr><td>桩端持力层</td><td>'+data.soil_d+'</td></tr><tr><td>单桩桩端设计压浆量(t)</td><td>'+data.grout_amount_d+'</td></tr><tr><td>单桩桩侧设计压浆量(t)</td><td>'+data.grout_amount_c+'</td></tr><tr><td>单桩设计压浆量(t)</td><td>'+data.grout_amount+'</td></tr><tr><td>实际压浆量(t)</td><td>'+data.grout_amount_fact+'</td></tr></table>'+'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
       				$("#DisplayModal").append(str);
  					$('#myModal').modal()
  				}

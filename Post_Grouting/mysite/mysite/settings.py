@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'kaisai',
     'sorl.thumbnail',
     'overview',
+    'grout',
 ]
 
 MIDDLEWARE = [
