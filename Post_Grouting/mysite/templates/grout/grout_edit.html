@@ -1,0 +1,32 @@
+{% extends "kaisai/base.html" %}
+{% load staticfiles %}
+{% block title %}修改已上传压浆量{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">修改已上传压浆量</h3>
+	</div>
+	<form class="form-horizontal panel-body" action="{% url 'grout:grout_edit' grout.id %}" method="post">{% csrf_token %}
+		<div class="form-group">
+			<label class="col-md-5 col-sm-5 col-xs-5 control-label">桩号（格式：123-3，22B-5）:</label>
+			<div class="col-md-6 col-sm-6 col-xs-6 text-left">{{ grout_form.name }}</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-5 col-sm-5 col-xs-5 control-label">压浆量（t）:</label>
+			<div class="col-md-6 col-sm-6 col-xs-6 text-left">{{ grout_form.amount }}</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-5 col-sm-5 col-xs-5 control-label">备注（可以为空）:</label>
+			<div class="col-md-6 col-sm-6 col-xs-6 text-left">{{ grout_form.remark }}</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-5 col-sm-5 col-xs-5 control-label">上传日期(格式：2018-08-08) :</label>
+			<div class="col-md-6 col-sm-6 col-xs-6 text-left">{{ grout_form.grout_date }}</div>
+		</div>
+		<div class="form-group text-center">
+			<input type="submit" class="btn btn-primary" value="修改">
+		</div>
+	</form>
+</div>
+
+{% endblock%}

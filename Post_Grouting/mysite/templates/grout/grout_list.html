@@ -1,0 +1,63 @@
+{% extends "kaisai/base.html" %}
+{% load staticfiles %}
+{% block title %}已上传的压浆量{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">已上传的压浆量</h3>
+	</div>
+	<table class="table table-hover table-responsive table-bordered">
+		<tr><td>序号</td><td>桩号</td><td>压浆量(t)</td><td>备注</td><td>上传日期</td><td>操作</td></tr>
+		{% for grout in grouts %}
+		<tr id="{{ grout.name }}">
+			<td>{{ forloop.counter }}</td>
+			<td>{{ grout.name }}</td>
+			<td>{{ grout.amount }}</td>
+			<td>{{ grout.remark }}</td>
+			<td>{{ grout.grout_date }}</td>
+			<td>
+				<a href="{% url 'grout:grout_edit' grout.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+				<a href="javascript:" name="delete" onclick="del_grout(this, {{ grout.id }})"><span class="glyphicon glyphicon-trash" style="margin-left: 10px"></span></a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
+<script type="text/javascript">
+	function del_grout(the, grout_id){
+		var grout_name = $(the).parents("tr").children("td").eq(1).text();
+		layer.open({
+			type: 1,
+			skin: "layui-layer-rim",
+			area: ["50%", "50%"],
+			title: "删除压浆记录",
+			content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除《'+grout_name+'》的压浆记录？</p></div>',
+			btn: ['确定', '取消'],
+			yes: function(){
+				$.ajax({
+					url: '{% url "grout:grout_del" %}',
+					type: "POST",
+					data: {"grout_id":grout_id},
+					success: function(e){
+						if(e=="1"){
+							layer.msg("已经删除！");
+							location.href = "{% url 'grout:grout_list' %}";
+						}else if(e=="2"){
+							layer.msg("删除失败！");
+						}else{
+							layer.msg(e);
+						}
+					},
+				});
+			},
+		});
+	}
+</script>
+
+
+
+{% endblock %}

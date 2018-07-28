@@ -24,3 +24,11 @@ def try_pile():
 @register.simple_tag
 def grout_amount():
 	return Grout.objects.count()
+
+@register.simple_tag
+def total_grout_amount():
+	sum_amount = 0
+	grout = Grout.objects.all()
+	for each in grout:
+		sum_amount = sum_amount + each.amount
+	return round(sum_amount,3)

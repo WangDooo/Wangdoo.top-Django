@@ -21,7 +21,7 @@
  	<p>项目总桩数：{% total_pile %}根，其中原桩长{% original_pile %}根，试桩{% try_pile %}根</p>
  	<p>目前成桩开塞数（包含原桩长和试桩）：{% total_kaisai %}根</p>
  	<p>目前已完成压浆桩数：{% grout_amount %}根</p>
- 	<p>目前总压浆用水泥吨数：XXXt</p>
+ 	<p>目前总压浆用水泥吨数：{% total_grout_amount %} t</p>
  	<p><a class="btn btn-primary btn-lg" href="{% url 'overview:overview' %}" role="button">点击查看概况平面图</a></p>
 </div>
 {% endblock %}

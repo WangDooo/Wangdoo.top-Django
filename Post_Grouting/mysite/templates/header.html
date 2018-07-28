@@ -16,7 +16,7 @@
 				<ul class="nav navbar-nav" role="navigation">
 					<li><a href="{% url 'kaisai:kaisai_search' %}">开塞表查询</a></li>
 					<li><a href="{% url 'overview:overview' %}">总体开塞压浆情况</a></li>
-					<li><a href="#">当日个人压浆量</a></li>
+					<li><a href="#">当日压浆量与情况说明</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right" style="margin-right:10px">
 					{% if user.is_authenticated %}
@@ -26,6 +26,7 @@
 				            <li><a href="{% url 'account:password_change' %}">修改密码</a></li>
 							<li><a href="{% url 'account:my_information' %}">个人信息</a></li>
 							<li><a href="{% url 'kaisai:kaisai_post' %}">开塞表管理</a></li>
+							<li><a href="{% url 'grout:grout_post' %}">压浆量管理</a></li>
 				        </ul>
 					</li>
 					<li><a href="{% url 'account:user_logout' %}">退出登录</a></li>
