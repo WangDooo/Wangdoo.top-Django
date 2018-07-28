@@ -16,7 +16,7 @@
 				<ul class="nav navbar-nav" role="navigation">
 					<li><a href="{% url 'kaisai:kaisai_search' %}">开塞表查询</a></li>
 					<li><a href="{% url 'overview:overview' %}">总体开塞压浆情况</a></li>
-					<li><a href="#">当日压浆量与情况说明</a></li>
+					<li><a href="{% url 'grout:grout_show' %}">当日压浆量与情况说明</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right" style="margin-right:10px">
 					{% if user.is_authenticated %}

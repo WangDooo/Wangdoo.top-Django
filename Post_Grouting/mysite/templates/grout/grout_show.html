@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load kaisai_tags %}
+{% load overview_tags %}
+{% block title %}当日压浆量与情况说明{% endblock %}
+{% block content %}
+
+<div class="panel panel-default ">
+	<div class="panel-heading">
+		<h3 class="panel-title">当日压浆桩数 {{  date|date:'Y-m-d' }}</h3>
+	</div>
+	<table class="table table-hover table-responsive table-bordered">
+		<tr>
+			<td>序号</td><td>桩号</td><td>压浆量（t）</td><td>上传者</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>123-1</td>
+			<td>12.3</td>
+			<td>王博臣</td>
+		</tr>
+	</table>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">压浆量根数折算与奖励</h3>
+	</div>
+	<table class="table table-hover table-responsive table-bordered">
+		<tr>
+			<td>序号</td><td>姓名</td><td>今日压浆量</td><td>昨日余量</td><td>总和</td><td>折算（根）</td><td>奖励</td><td>现余量</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>王博臣</td>
+			<td>50</td>
+			<td>30</td>
+			<td>80</td>
+			<td>10</td>
+			<td>800</td>
+			<td>20</td>
+		</tr>
+	</table>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">当日情况汇报 {{  date|date:'Y-m-d' }}</h3>
+	</div>
+	<table class="table table-hover table-responsive table-bordered">
+		<tr>
+			<td>序号</td><td>姓名</td><td>情况说明</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>王博臣</td>
+			<td>水泥不足</td>
+		</tr>
+	</table>
+</div>		
+<div id="DisplayModal"></div>
+
+
+
+
+
+{% endblock %}

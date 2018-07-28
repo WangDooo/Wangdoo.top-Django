@@ -10,7 +10,7 @@ class Grout(models.Model):
 	slug = models.SlugField(max_length=500, blank=True)
 	grout_date = models.DateField(default=timezone.now())
 	amount = models.FloatField()
-	remark = models.TextField(max_length=500, blank=True)
+	remark = models.CharField(max_length=500, blank=True)
 
 	class Meta:
 		ordering = ("id",)
@@ -21,3 +21,11 @@ class Grout(models.Model):
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name)
 		super(Grout, self).save(*args, **kwargs)
+
+class Report(models.Model):
+	user = models.ForeignKey(User, related_name="report", on_delete=models.CASCADE)
+	report = models.CharField(max_length=500, blank=True)
+	date = models.DateField(default=timezone.now())
+
+	class Meta:
+		ordering = ("-date",)

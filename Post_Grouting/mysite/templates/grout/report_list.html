@@ -1,0 +1,60 @@
+{% extends "kaisai/base.html" %}
+{% load staticfiles %}
+{% block title %}已上传的当日详情{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">已上传的当日情况</h3>
+	</div>
+	<table class="table table-hover table-responsive table-bordered">
+		<tr><td>序号</td><td>当日情况</td><td>上传日期</td><td>操作</td></tr>
+		{% for report in reports %}
+		<tr id="{{ report.id }}">
+			<td>{{ forloop.counter }}</td>
+			<td>{{ report.report|slice:'20' }}</td>
+			<td>{{ report.date }}</td>
+			<td>
+				<a href="javascript:" name="delete" onclick="del_report(this, {{ report.id }})"><span class="glyphicon glyphicon-trash" style="margin-left: 10px"></span></a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
+<script type="text/javascript">
+	function del_report(the, report_id){
+		var grout_name = $(the).parents("tr").children("td").eq(2).text();
+		layer.open({
+			type: 1,
+			skin: "layui-layer-rim",
+			area: ["50%", "50%"],
+			title: "删除情况汇报",
+			content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除《'+grout_name+'》的情况汇报？</p></div>',
+			btn: ['确定', '取消'],
+			yes: function(){
+				$.ajax({
+					url: '{% url "grout:report_del" %}',
+					type: "POST",
+					data: {"report_id":report_id},
+					success: function(e){
+						if(e=="1"){
+							layer.msg("已经删除！");
+							location.href = "{% url 'grout:report_list' %}";
+						}else if(e=="2"){
+							layer.msg("删除失败！");
+						}else{
+							layer.msg(e);
+						}
+					},
+				});
+			},
+		});
+	}
+</script>
+
+
+
+{% endblock %}
