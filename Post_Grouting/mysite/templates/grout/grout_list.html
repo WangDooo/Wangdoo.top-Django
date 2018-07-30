@@ -16,7 +16,6 @@
 			<td>{{ grout.remark }}</td>
 			<td>{{ grout.grout_date }}</td>
 			<td>
-				<a href="{% url 'grout:grout_edit' grout.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
 				<a href="javascript:" name="delete" onclick="del_grout(this, {{ grout.id }})"><span class="glyphicon glyphicon-trash" style="margin-left: 10px"></span></a>
 			</td>
 		</tr>

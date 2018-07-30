@@ -5,11 +5,66 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 
+
 from .forms import GroutForm, ReportForm
-from .models import Grout, Report
+from .models import Grout, Report, Surplus, Remaining
 from slugify import slugify
 
 from django.utils import timezone
+import datetime
+
+# 奖励函数
+def reward(num):
+	if num == 3:
+		money = 50
+	elif num == 4:
+		money = 150
+	elif num == 5:
+		money = 250
+	elif num == 6:
+		money = 400
+	elif num == 7:
+		money = 550
+	elif num == 8:
+		money = 800
+	else:
+		money = 0
+	return money
+
+def update_surplus(user_id):
+	amount_today = 0
+	today =  datetime.datetime.now().strftime("%Y-%m-%d")
+	yesterday = (datetime.datetime.now()+datetime.timedelta(days=-1)).strftime("%Y-%m-%d")
+	surplus = Surplus.objects.filter(user=user_id)
+	grout = Grout.objects.filter(user=user_id)
+	grout_today = grout.filter(grout_date=today)
+	for each in grout_today:
+		amount_today = amount_today + each.amount
+	if len(surplus) == 0:
+		Surplus.objects.create(user=user_id)
+	# Remaining表中，user的最新一次的 remain
+	remains_yesterday = Remaining.objects.filter(user=user_id)
+	if len(remains_yesterday) == 0:
+		Remaining.objects.create(user=user_id,date=yesterday)
+	remain_yesterday_ls = remains_yesterday.exclude(date=today)
+	remain_yesterday = remain_yesterday_ls[len(remain_yesterday_ls)-1]
+	# 选择Surplus中user的list- remaining_now
+	remaining_now = Surplus.objects.filter(user=user_id)[0]
+	# 当日总量
+	remaining_now.amount_today = amount_today
+	# 加上余量总共
+	amount_sum = remain_yesterday.remain + amount_today
+	remaining_now.amount_sum = amount_sum 
+	# 折算根数
+	conversion_number = amount_sum//8
+	remaining_now.conversion_number = conversion_number
+	# 奖励
+	remaining_now.reward = reward(conversion_number)	
+	# 余量
+	remain_today = amount_sum%8
+	remaining_now.remaining = remain_today
+	remaining_now.save()
+	Remaining.objects.create(user=user_id,remain=remain_today)
 
 
 @login_required(login_url='/account/login/')
@@ -23,6 +78,11 @@ def grout_post(request):
 				new_item.user = request.user
 				new_item.name = new_item.name.upper() 
 				new_item.save()
+				try:
+					user_id = request.user
+					update_surplus(user_id)
+				except:
+					return HttpResponse('<h1>更新余量出错</h1>')
 				return HttpResponseRedirect(reverse('grout:grout_list'))
 			except:
 				return HttpResponse('<h1>上传中有问题！</h1>')
@@ -31,6 +91,7 @@ def grout_post(request):
 	else:
 		grout_form = GroutForm()
 		return render(request, 'grout/grout_post.html', {"grout_form": grout_form})
+
 
 
 @login_required(login_url='/account/login/')
@@ -46,6 +107,8 @@ def grout_del(request):
 	try:
 		grout = Grout.objects.get(id=grout_id)
 		grout.delete()
+		user_id = request.user
+		update_surplus(user_id)
 		return HttpResponse("1")
 	except:
 		return HttpResponse("2")
@@ -106,6 +169,20 @@ def report_del(request):
 	except:
 		return HttpResponse("2")
 
+
+
+
 def grout_show(request):
-	date = timezone.now()
-	return render(request, 'grout/grout_show.html', {"date":date})
+	date =  datetime.datetime.now().strftime("%Y-%m-%d")
+	grouts = Grout.objects.filter(grout_date=date)
+	reports = Report.objects.filter(date=date)
+	
+	person_ids = [] # 今日有上传的id
+
+	for obj in grouts:
+		if obj.user not in person_ids:
+			person_ids.append(obj.user)
+
+	person_grouts = Surplus.objects.filter(user__in=person_ids)
+
+	return render(request, 'grout/grout_show.html', {"date":date, "grouts":grouts, "reports":reports, "person_grouts":person_grouts})

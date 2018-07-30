@@ -7,18 +7,20 @@
 
 <div class="panel panel-default ">
 	<div class="panel-heading">
-		<h3 class="panel-title">当日压浆桩数 {{  date|date:'Y-m-d' }}</h3>
+		<h3 class="panel-title">当日压浆桩数 {{  date }}</h3>
 	</div>
 	<table class="table table-hover table-responsive table-bordered">
 		<tr>
 			<td>序号</td><td>桩号</td><td>压浆量（t）</td><td>上传者</td>
 		</tr>
-		<tr>
-			<td>1</td>
-			<td>123-1</td>
-			<td>12.3</td>
-			<td>王博臣</td>
+		{% for grout in grouts %}
+		<tr id="{{ grout.name }}">
+			<td>{{ forloop.counter }}</td>
+			<td>{{ grout.name }}</td>
+			<td>{{ grout.amount }}</td>
+			<td>{{ grout.user.userprofile.realname }}</td>
 		</tr>
+		{% endfor %}
 	</table>
 </div>
 
@@ -28,40 +30,40 @@
 	</div>
 	<table class="table table-hover table-responsive table-bordered">
 		<tr>
-			<td>序号</td><td>姓名</td><td>今日压浆量</td><td>昨日余量</td><td>总和</td><td>折算（根）</td><td>奖励</td><td>现余量</td>
+			<td>序号</td><td>人员</td><td>今日压浆量</td><td>加余量总和</td><td>折算（根）</td><td>奖励</td><td>现余量</td>
 		</tr>
+		{% for person in person_grouts %}
 		<tr>
-			<td>1</td>
-			<td>王博臣</td>
-			<td>50</td>
-			<td>30</td>
-			<td>80</td>
-			<td>10</td>
-			<td>800</td>
-			<td>20</td>
+			<td>{{ forloop.counter }}</td>
+			<td>{{ person.user.userprofile.realname }}</td>
+			<td>{{ person.amount_today }}</td>
+			<td>{{ person.amount_sum }}</td>
+			<td>{{ person.conversion_number }}</td>
+			<td>{{ person.reward }}</td>
+			<td>{{ person.remaining }}</td>
 		</tr>
+		{% endfor %}
 	</table>
 </div>
 
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title">当日情况汇报 {{  date|date:'Y-m-d' }}</h3>
+		<h3 class="panel-title">当日情况汇报 {{ date }}</h3>
 	</div>
 	<table class="table table-hover table-responsive table-bordered">
 		<tr>
-			<td>序号</td><td>姓名</td><td>情况说明</td>
+			<td>序号</td><td>人员</td><td>情况说明</td>
 		</tr>
-		<tr>
-			<td>1</td>
-			<td>王博臣</td>
-			<td>水泥不足</td>
+		{% for report in reports %}
+		<tr id="report.id">
+			<td>{{ forloop.counter }}</td>
+			<td>{{ report.user.userprofile.realname }}</td>
+			<td>{{ report.report }}</td>
 		</tr>
+		{% empty %}
+		<tr><td>今天没有情况汇报</td><td></td><td></td></tr>
+		{% endfor %}
 	</table>
 </div>		
-<div id="DisplayModal"></div>
-
-
-
-
 
 {% endblock %}

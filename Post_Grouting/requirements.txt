@@ -5,4 +5,3 @@ mysqlclient
 pillow
 awesome-slugify
 sorl-thumbnail
-
