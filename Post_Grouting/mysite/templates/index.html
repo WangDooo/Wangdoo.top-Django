@@ -24,4 +24,10 @@
  	<p>目前总压浆用水泥吨数：{% total_grout_amount %} t</p>
  	<p><a class="btn btn-primary btn-lg" href="{% url 'overview:overview' %}" role="button">点击查看概况平面图</a></p>
 </div>
+<div class="jumbotron">
+ 	<h1>当日压浆情况</h1>
+ 	<p>今日压浆桩数：{% today_pile_amount %}根</p>
+ 	<p>今日水泥吨数：{% today_grout_amount %} t</p>
+ 	<p><a class="btn btn-primary btn-lg" href="{% url 'grout:grout_show' %}" role="button">点击查看当日详情</a></p>
+</div>
 {% endblock %}

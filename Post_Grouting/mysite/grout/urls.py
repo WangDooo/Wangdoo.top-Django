@@ -12,4 +12,5 @@ urlpatterns = [
 	path('report-list', views.report_list, name='report_list'),
 	path('report-del/', views.report_del, name="report_del"),
 	path('grout-show/', views.grout_show, name="grout_show"),
+	path('grout-difference/', views.grout_difference, name="grout_difference"),
 ]

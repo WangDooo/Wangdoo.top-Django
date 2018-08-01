@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}设计值与实际压浆量差值大于0.2t{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">设计值与实际压浆量差值大于0.2t</h3>
+	</div>
+	<table class="table table-hover table-responsive table-bordered">
+		<tr><td>序号</td><td>桩号</td><td>设计压浆量(t)</td><td>实际压浆量(t)</td><td>差值(t)</td></tr>
+		{% for difference in differences %}
+		<tr id="{{ difference.name }}">
+			<td>{{ forloop.counter }}</td>
+			<td>{{ difference.name }}</td>
+			<td>{{ difference.design_amount }}</td>
+			<td>{{ difference.fact_amount }}</td>
+			<td>{{ difference.difference}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+
+
+{% endblock %}

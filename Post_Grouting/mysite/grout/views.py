@@ -8,6 +8,7 @@ from django.urls import reverse
 
 from .forms import GroutForm, ReportForm
 from .models import Grout, Report, Surplus, Remaining
+from overview.models import Piledetail
 from slugify import slugify
 
 from django.utils import timezone
@@ -61,7 +62,7 @@ def update_surplus(user_id):
 	# 奖励
 	remaining_now.reward = reward(conversion_number)	
 	# 余量
-	remain_today = amount_sum%8
+	remain_today = round(amount_sum%8,3)
 	remaining_now.remaining = remain_today
 	remaining_now.save()
 	Remaining.objects.create(user=user_id,remain=remain_today)
@@ -186,3 +187,19 @@ def grout_show(request):
 	person_grouts = Surplus.objects.filter(user__in=person_ids)
 
 	return render(request, 'grout/grout_show.html', {"date":date, "grouts":grouts, "reports":reports, "person_grouts":person_grouts})
+
+
+def grout_difference(request):
+	differences = []
+	grouts = Grout.objects.all()
+	piles = Piledetail.objects.all()
+	for grout in grouts:
+		if grout.amount==0:
+			differences.append({"name":grout.name,"design_amount":'此桩已压',"fact_amount":'缺压浆表'})
+		else:
+			for pile in piles:
+				if (grout.name==pile.name) and (grout.amount+0.21<pile.grout_amount):
+					difference = round(pile.grout_amount - grout.amount,2)
+					differences.append({"name":grout.name,"design_amount":pile.grout_amount,"fact_amount":grout.amount,"difference":difference})
+
+	return render(request, 'grout/grout_difference.html', {"differences":differences})
