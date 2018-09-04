@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang='zh-cn'>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}{% endblock %}-喵咪运动</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select.min.css' %}">
+</head>
+<body>
+	{% include "sport/header.html" %}
+	<div class="container mycontent">
+			{% block content %}{% endblock %}
+	</div>
+	{% include "footer.html" %}
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% load staticfiles %}
+<div class="container">
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+	      		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1" aria-expanded="false">
+	       			<span class="sr-only">Toggle navigation</span>
+	        		<span class="icon-bar"></span>
+	        		<span class="icon-bar"></span>
+	        		<span class="icon-bar"></span>
+	      		</button>
+				<a class="navbar-brand" href="{% url 'sport:sport' %}"><strong>喵咪运动</strong></a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+				<ul class="nav navbar-nav" role="navigation">
+					<li><a href="{% url 'sport:sport_post' %}">今日打卡</a></li>
+					<li><a href="{% url 'sport:sport_list2' %}">历史打卡</a></li>
+					<li><a href="{% url 'sport:sport_list' %}">历史打卡【高颜值版本】</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right" style="margin-right:10px">
+					{% if user.is_authenticated %}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.userprofile.realname }} <span class="caret"></span></a>
+				        <ul class="dropdown-menu">
+				            <li><a href="{% url 'account:password_change' %}">修改密码</a></li>
+							<li><a href="{% url 'account:my_information' %}">个人信息</a></li>
+				        </ul>
+					</li>
+					<li><a href="{% url 'account:user_logout' %}">退出登录</a></li>
+					{% else %}
+					<li><a href="{% url 'account:user_login' %}">登录</a></li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</nav>
+</div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>

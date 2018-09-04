@@ -1,0 +1,16 @@
+{% extends "sport/base.html" %}
+{% load staticfiles %}
+{% block title %}历史打卡{% endblock %}
+{% block content %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/sport/reset.css' %}"> -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/sport/css.css' %}">
+
+<div style="width: 1200px;height: 342px;margin: 30px auto;" id="rili">
+	<div id='calendar'></div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/sport/index.js' %}"></script>
+
+
+{% endblock%}

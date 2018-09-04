@@ -27,6 +27,7 @@ urlpatterns = [
     path('kaisai/', include(('kaisai.urls','kaisai'), namespace='kaisai')),
     path('overview/', include(('overview.urls','overview'), namespace='overview')),
     path('grout/', include(('grout.urls','grout'), namespace='grout')),
+    path('sport/', include(('sport.urls','sport'), namespace='sport')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

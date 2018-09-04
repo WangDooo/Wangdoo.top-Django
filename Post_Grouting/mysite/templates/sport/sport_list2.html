@@ -1,0 +1,23 @@
+{% extends "sport/base.html" %}
+{% load staticfiles %}
+{% block title %}历史打卡{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">历史打卡</h3>
+	</div>
+	<table class="table table-hover table-responsive table-bordered">
+		<tr><td>序号</td><td>训练内容</td><td>运动感言</td><td>时间</td></tr>
+		{% for sport in sports %}
+		<tr id="{{ sport.id }}">
+			<td>{{ forloop.counter }}</td>
+			<td>{{ sport.sport }}</td>
+			<td>{{ sport.remark }}</td>
+			<td>{{ sport.publish_time }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+
+{% endblock%}
