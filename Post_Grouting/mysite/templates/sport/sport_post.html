@@ -43,7 +43,7 @@
 			<td>{{ sport_today.remark }}</td>
 			<td>{{ sport_today.publish_time }}</td>
 		</tr>
-		<tr><td><input type="submit" class="btn btn-primary" value="删除打卡记录-重新打卡" onclick="del_card(this, {{ sport_today.id }})"></td></tr>
+		<tr><td><input type="submit" class="btn btn-danger" value="删除打卡记录-重新打卡" onclick="del_card(this, {{ sport_today.id }})"></td></tr>
 	</table>
 	
 	{% endif %}

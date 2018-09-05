@@ -2,9 +2,13 @@
 {% load staticfiles %}
 {% block title %}今日打卡{% endblock %}
 {% block content %}
-<div >
-	<h1 class="text-center" style="width:100%">欢迎加入喵咪运动！</h1>
-	<img style="width:100%" src="{% static 'images/sport_logo.jpg' %}">
+<div>
+	<div class="jumbotron">
+ 		<h1>欢迎加入喵咪运动！</h1>	
+ 		<img style="width:40%;margin-left:30%" src="{% static 'images/sport_logo.jpg' %}">
+ 		<h2>今日已有 29991 人完成打卡！</h2>
+ 		<h2>历史累计完成打卡人次 551515 ！</h2>
+</div>
 </div>
 
 {% endblock %}
