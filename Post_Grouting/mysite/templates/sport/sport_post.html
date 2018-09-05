@@ -2,7 +2,8 @@
 {% load staticfiles %}
 {% block title %}历史打卡{% endblock %}
 {% block content %}
-<div class="panel panel-default">
+<div id="today_card" class="panel panel-default">
+	{% if today_card == '2' %}
 	<div class="panel-heading">
 		<h3 class="panel-title">今日打卡</h3>
 	</div>
@@ -17,7 +18,7 @@
 				    <option value="有氧（跑步、游泳）">有氧（跑步、游泳）</option>
 				    <option value="我的大胸脯">我的大胸脯</option>
 				    <option value="俺宽阔的肩">俺宽阔的肩</option>
-				    <option value="背">背</option>                              
+				    <option value="背">背</option>                             
 				</select>
 			</div>
 		</div>
@@ -31,6 +32,21 @@
 			<input type="submit" class="btn btn-primary" value="今日打卡">
 		</div>
 	</form>
+	{% else %}
+	<div class="panel-heading">
+		<h3 class="panel-title">今日已完成打卡</h3>
+	</div>
+	<table class="table table-hover table-responsive table-bordered">
+		<tr><td>训练内容</td><td>运动感言</td><td>时间</td></tr>
+		<tr>
+			<td>{{ sport_today.sport }}</td>
+			<td>{{ sport_today.remark }}</td>
+			<td>{{ sport_today.publish_time }}</td>
+		</tr>
+		<tr><td><input type="submit" class="btn btn-primary" value="删除打卡记录-重新打卡" onclick="del_card(this, {{ sport_today.id }})"></td></tr>
+	</table>
+	
+	{% endif %}
 </div>
 
 
@@ -43,6 +59,23 @@
 <script>
 $('.selectpicker').selectpicker({}); 
 $('.selectpicker').selectpicker('val', '老子TM今天没练，只打卡！'); 
+</script>
+
+<script type="text/javascript">
+	function del_card(the, card_id){
+		$.ajax({
+			url: '{% url "sport:del_card" %}',
+			type: "POST",
+			data: {"card_id":card_id},
+			success: function(e){
+				if(e=="1"){
+					location.href = "{% url 'sport:sport_post' %}";
+				}else{
+					alert("删除失败");
+				}
+			},
+		});
+	}
 </script>
 
 {% endblock%}
