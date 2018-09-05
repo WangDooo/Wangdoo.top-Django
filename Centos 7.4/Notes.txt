@@ -1,5 +1,5 @@
 <---------更新时重启服务器------------------------------------------------------------->
-systemctl restart uwsgi
+systemctl restart uwsgi
 systemctl restart nginx
 
 <---------Navicat连接Mysql 修改Mysql密码------------------------------------------------------------->
