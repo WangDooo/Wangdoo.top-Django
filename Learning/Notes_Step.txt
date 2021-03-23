@@ -17,7 +17,7 @@
 
 7. python manage.py migrate
 
-8. python manage.py createsuperuser
+8. python manage.py createsuperuser P17
 
 9. 写admin.py 
 		a. from .models import BlogArticles
@@ -62,3 +62,4 @@
 		b. content.html
 		c. titles.html 增加链接 <a href="{{ i.id }}"></a>
 		d. urls.py path('<int:article_id>/', views.blog_article, name='blog_detail'),
+
